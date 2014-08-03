@@ -21,7 +21,7 @@ SOFTWARE = 1
 
 class Renderer(object):
     """SDL2-based renderer for windows and sprites."""
-    def __init__(self, target, index=-1,
+    def __init__(self, target, index=-1, logical_size=None,
                  flags=render.SDL_RENDERER_ACCELERATED):
         """Creates a new Renderer for the given target.
 
@@ -48,10 +48,28 @@ class Renderer(object):
         else:
             raise TypeError("unsupported target type")
 
+        if logical_size is not None:
+            self.logical_size = logical_size
+
     def __del__(self):
         if self.renderer:
             render.SDL_DestroyRenderer(self.renderer)
         self.rendertarget = None
+
+    @property
+    def logical_size(self):
+        """The logical pixel size of the Renderer"""
+        w, h = c_int(), c_int()
+        render.SDL_RenderGetLogicalSize(self.renderer, byref(w), byref(h))
+        return w.value, h.value
+
+    @logical_size.setter
+    def logical_size(self, size):
+        """The logical pixel size of the Renderer"""
+        width, height = size
+        ret = render.SDL_RenderSetLogicalSize(self.renderer, width, height)
+        if ret != 0:
+            raise SDLError()
 
     @property
     def color(self):
