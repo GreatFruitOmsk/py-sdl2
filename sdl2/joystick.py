@@ -20,8 +20,28 @@ __all__ = ["SDL_Joystick", "SDL_JoystickGUID", "SDL_JoystickID",
 class SDL_Joystick(Structure):
     pass
 
+class SDL_JoystickGUIDData(Structure):
+    _fields_ = [
+        ("e0", Uint8),
+        ("e1", Uint8),
+        ("e2", Uint8),
+        ("e3", Uint8),
+        ("e4", Uint8),
+        ("e5", Uint8),
+        ("e6", Uint8),
+        ("e7", Uint8),
+        ("e8", Uint8),
+        ("e9", Uint8),
+        ("e10", Uint8),
+        ("e11", Uint8),
+        ("e12", Uint8),
+        ("e13", Uint8),
+        ("e14", Uint8),
+        ("e15", Uint8),
+    ]
+
 class SDL_JoystickGUID(Structure):
-    _fields_ = [("data", (Uint8 * 16))]
+    _fields_ = [("data", SDL_JoystickGUIDData)]
 
 SDL_JoystickID = Sint32
 
