@@ -31,7 +31,6 @@ SDL_JoystickOpen = _bind("SDL_JoystickOpen", [c_int], POINTER(SDL_Joystick))
 SDL_JoystickName = _bind("SDL_JoystickName", [POINTER(SDL_Joystick)], c_char_p)
 SDL_JoystickGetDeviceGUID = _bind("SDL_JoystickGetDeviceGUID", [c_int], SDL_JoystickGUID)
 SDL_JoystickGetGUID = _bind("SDL_JoystickGetGUID", [POINTER(SDL_Joystick)], SDL_JoystickGUID)
-SDL_JoystickGetGUIDString = _bind("SDL_JoystickGetGUIDString", [SDL_JoystickGUID, c_char_p, c_int])
 SDL_JoystickGetGUIDFromString = _bind("SDL_JoystickGetGUIDFromString", [c_char_p], SDL_JoystickGUID)
 SDL_JoystickGetAttached = _bind("SDL_JoystickGetAttached", [POINTER(SDL_Joystick)], SDL_bool)
 SDL_JoystickInstanceID = _bind("SDL_JoystickInstanceID", [POINTER(SDL_Joystick)], SDL_JoystickID)
@@ -55,3 +54,10 @@ SDL_JoystickGetHat = _bind("SDL_JoystickGetHat", [POINTER(SDL_Joystick), c_int],
 SDL_JoystickGetBall = _bind("SDL_JoystickGetBall", [POINTER(SDL_Joystick), c_int, POINTER(c_int), POINTER(c_int)], c_int)
 SDL_JoystickGetButton = _bind("SDL_JoystickGetButton", [POINTER(SDL_Joystick), c_int], Uint8)
 SDL_JoystickClose = _bind("SDL_JoystickClose", [POINTER(SDL_Joystick)])
+
+def SDL_JoystickGetGUIDString(guid):
+    s = ''
+    for g in guid.data:
+        s += "{:x}".format(g >> 4)
+        s += "{:x}".format(g & 0x0F)
+   return s
