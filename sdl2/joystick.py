@@ -60,4 +60,4 @@ def SDL_JoystickGetGUIDString(guid):
     for g in guid.data:
         s += "{:x}".format(g >> 4)
         s += "{:x}".format(g & 0x0F)
-   return s
+    return s
